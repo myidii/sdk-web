@@ -63,7 +63,11 @@ export function startLiveness(opts: StartOptions): Promise<LivenessResult> {
     const { root, close, origin } = overlay(opts.url);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    let settled = false;
     const finish = (result: LivenessResult) => {
+      // The close button stays clickable while the overlay fades out. Only the first outcome counts.
+      if (settled) return;
+      settled = true;
       window.removeEventListener("message", onMessage);
       window.removeEventListener("keydown", onKey);
       root.classList.remove("in");

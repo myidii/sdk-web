@@ -29,10 +29,11 @@ function overlay(url: string) {
     <style>
       [data-myidii]{position:fixed;inset:0;z-index:2147483646;display:grid;place-items:center;background:rgba(10,10,10,.55);opacity:0;transition:opacity .25s ease}
       [data-myidii].in{opacity:1}
-      [data-myidii] .mi-frame{position:relative;width:min(440px,100vw);height:min(720px,100dvh);border-radius:24px;overflow:hidden;background:#F6F7F9;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);transform:translateY(12px) scale(.98);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+      [data-myidii] .mi-frame{position:relative;width:min(440px,100vw);height:min(720px,100dvh);border-radius:24px;overflow:hidden;background:#F6F7F9;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);transform:translateY(12px) scale(.98);transition:transform .35s cubic-bezier(.22,1,.36,1),width .4s cubic-bezier(.22,1,.36,1),height .4s cubic-bezier(.22,1,.36,1),border-radius .4s}
+      [data-myidii] .mi-frame.full{width:100vw;height:100dvh;border-radius:0}
       [data-myidii].in .mi-frame{transform:none}
       [data-myidii] iframe{width:100%;height:100%;border:0;display:block}
-      [data-myidii] .mi-x{position:absolute;top:12px;right:12px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(10,10,10,.06);color:#0A0A0A;font:16px/1 system-ui;cursor:pointer}
+      [data-myidii] .mi-x{position:absolute;top:22px;right:22px;z-index:1;width:32px;height:32px;border:0;border-radius:50%;background:rgba(10,10,10,.06);color:#0A0A0A;font:16px/1 system-ui;cursor:pointer}
       @media (max-width:480px){[data-myidii] .mi-frame{border-radius:0;height:100dvh}}
     </style>
     <div class="mi-frame" role="dialog" aria-modal="true" aria-label="Face verification">
@@ -72,6 +73,9 @@ export function startLiveness(opts: StartOptions): Promise<LivenessResult> {
     };
     const onMessage = (e: MessageEvent) => {
       if (e.origin !== origin || e.data?.type !== MSG) return;
+      // A live scan fills the screen while it runs: the colour check needs the light. See the scan page.
+      if (e.data.event === "expand") root.querySelector(".mi-frame")!.classList.add("full");
+      if (e.data.event === "collapse") root.querySelector(".mi-frame")!.classList.remove("full");
       if (e.data.event === "done") finish({ status: e.data.status, sessionId: e.data.sessionId ?? null });
     };
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") finish({ status: "cancelled", sessionId: null }); };

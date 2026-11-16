@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 import { Myidii } from "../../../sdk-server/node/dist/index.js";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
-const sdkDir = join(here, "../../dist");
+const sdkDir = join(here, "../../packages/web/dist");
 const port = Number(process.env.PORT || 4800);
 const myidii = new Myidii(process.env.MYIDII_SECRET_KEY, { apiUrl: process.env.MYIDII_API_URL });
 const received = [];

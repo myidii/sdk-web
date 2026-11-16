@@ -1,0 +1,58 @@
+{
+  "name": "@myidii/web",
+  "version": "0.2.0",
+  "description": "MYIDII web SDK: run the liveness scan in any website, with or without a bundler",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/myidii.min.js",
+  "jsdelivr": "./dist/myidii.min.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./browser": "./dist/myidii.min.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup && esbuild src/browser.ts --bundle --minify --format=iife --target=es2018 --outfile=dist/myidii.min.js --sourcemap --define:__VERSION__=\\\"$npm_package_version\\\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "keywords": [
+    "myidii",
+    "liveness",
+    "face",
+    "verification",
+    "kyc",
+    "identity"
+  ],
+  "homepage": "https://github.com/myidii/sdk-web/tree/main/packages/web#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myidii/sdk-web.git",
+    "directory": "packages/web"
+  },
+  "bugs": {
+    "url": "https://github.com/myidii/sdk-web/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

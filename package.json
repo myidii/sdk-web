@@ -1,60 +1,21 @@
 {
-  "name": "@myidii/web",
-  "version": "0.1.0",
-  "description": "MYIDII web SDK: run the liveness scan in your site, with a React hook",
+  "name": "myidii-sdk-web",
+  "private": true,
+  "description": "MYIDII browser SDKs: @myidii/web and @myidii/react",
   "license": "MIT",
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./react": {
-      "types": "./dist/react.d.ts",
-      "default": "./dist/react.js"
-    }
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "sideEffects": false,
-  "peerDependencies": {
-    "react": ">=18"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    }
-  },
+  "workspaces": ["packages/*"],
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "npm run build -w @myidii/web && npm run build -w @myidii/react",
+    "typecheck": "npm run typecheck --workspaces",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "devDependencies": {
-    "typescript": "^5.6.0",
-    "@types/react": "^19.0.0",
-    "react": "^19.0.0"
-  },
-  "keywords": [
-    "myidii",
-    "liveness",
-    "face",
-    "verification",
-    "kyc",
-    "react"
-  ],
-  "homepage": "https://github.com/myidii/sdk-web#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/myidii/sdk-web.git"
-  },
-  "bugs": {
-    "url": "https://github.com/myidii/sdk-web/issues"
-  },
-  "publishConfig": {
-    "access": "public"
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.0",
+    "esbuild": "^0.25.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.6.0"
   }
 }

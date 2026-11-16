@@ -1,19 +1,60 @@
 {
   "name": "@myidii/web",
   "version": "0.1.0",
-  "description": "MYIDII Web SDK: run the liveness scan in your website or web app.",
+  "description": "MYIDII web SDK: run the liveness scan in your site, with a React hook",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-    "./react": { "types": "./dist/react.d.ts", "default": "./dist/react.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    }
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "sideEffects": false,
-  "peerDependencies": { "react": ">=18" },
-  "peerDependenciesMeta": { "react": { "optional": true } },
-  "scripts": { "build": "tsc -p tsconfig.json" },
-  "devDependencies": { "typescript": "^5.6.0", "@types/react": "^19.0.0", "react": "^19.0.0" }
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0"
+  },
+  "keywords": [
+    "myidii",
+    "liveness",
+    "face",
+    "verification",
+    "kyc",
+    "react"
+  ],
+  "homepage": "https://github.com/myidii/sdk-web#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myidii/sdk-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/myidii/sdk-web/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@myidii/web",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MYIDII web SDK: run the liveness scan in any website, with or without a bundler",
   "license": "MIT",
   "type": "module",

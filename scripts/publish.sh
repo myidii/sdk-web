@@ -11,8 +11,17 @@ NPM_CONFIG_USERCONFIG="$(mktemp)"
 export NPM_CONFIG_USERCONFIG
 printf 'registry=https://registry.npmjs.org/\n' > "$NPM_CONFIG_USERCONFIG"
 
+# Trusted publishing needs the workflow's GitHub identity token (permissions: id-token: write).
+if [ -n "${ACTIONS_ID_TOKEN_REQUEST_URL:-}" ] && [ -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}" ]; then
+  echo "GitHub identity token: available"
+else
+  echo "GitHub identity token: missing. Check the workflow has permissions: id-token: write." >&2
+  exit 1
+fi
+
 before="$(git tag | sort)"
-npx changeset publish
+# npm only explains a failed trusted-publishing exchange in its verbose log.
+NPM_CONFIG_LOGLEVEL=verbose npx changeset publish
 git push origin --tags
 
 # The folder of a workspace package, from its name.

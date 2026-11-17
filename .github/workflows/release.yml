@@ -21,7 +21,6 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org
       - name: Trusted publishing needs a recent npm
         run: npm install -g npm@latest
       - run: npm ci
@@ -31,11 +30,18 @@ jobs:
       - run: npm run test:coverage
       - run: npx playwright install --with-deps chromium
       - run: npm run test:packaging -- --skip-build
-      - uses: changesets/action@v1
+      # Opens or updates the "Version packages" pull request while there are unreleased changesets.
+      - id: changesets
+        uses: changesets/action@v1
         with:
           version: npm run version-packages
-          publish: npx changeset publish
           commit: Version packages
           title: Version packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Once that pull request is merged, publish through trusted publishing (no npm token exists).
+      - name: Publish to npm
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: bash scripts/publish.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
